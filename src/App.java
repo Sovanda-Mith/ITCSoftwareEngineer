@@ -29,6 +29,7 @@ public class App {
                         break;
                     case 3:
                         System.out.println("Remove reservation");
+                        removeReservation(scanner);
                         break;
                     case 4:
                         System.out.println("Update reservation");
@@ -121,6 +122,18 @@ public class App {
     }
 
     private static void removeReservation(Scanner scanner) {
+        Date now = new Date();
+        for (Reservation reservation : reservations) {
+            if (reservation.getStartReserve().after(now)) {
+                System.out.println(reservation);
+            }
+        }
+        try {
+            System.out.println("Enter reservation ID to remove: ");
+            int id = Integer.parseInt(scanner.nextLine());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid reservation ID. Please try again.");
+        }
     }
 
 }
