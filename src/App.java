@@ -129,8 +129,22 @@ public class App {
             }
         }
         try {
-            System.out.println("Enter reservation ID to remove: ");
+            System.out.print("Enter reservation ID to remove: ");
             int id = Integer.parseInt(scanner.nextLine());
+
+            boolean removed = false;
+            for (Reservation reservation : reservations) {
+                if (reservation.getId() == id) {
+                    reservations.remove(reservation);
+                    System.out.println("Reservation removed successfully");
+                    removed = true;
+                    break;
+                }
+            }
+            if (!removed) {
+                System.out.println("Reservation not found");
+            }
+
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid reservation ID. Please try again.");
         }
