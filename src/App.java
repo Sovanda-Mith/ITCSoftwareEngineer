@@ -33,6 +33,7 @@ public class App {
                         break;
                     case 4:
                         System.out.println("Update reservation");
+                        updateReservation(scanner);
                         break;
                     case 5:
                         System.out.println("Swap room");
@@ -145,6 +146,92 @@ public class App {
                 System.out.println("Reservation not found");
             }
 
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid reservation ID. Please try again.");
+        }
+    }
+
+    private static void updateReservation(Scanner scanner) {
+        Date now = new Date();
+        for (Reservation reservation : reservations) {
+            if (reservation.getStartReserve().after(now)) {
+                System.out.println(reservation);
+            }
+        }
+        try {
+            System.out.print("Enter reservation ID to update: ");
+            int id = Integer.parseInt(scanner.nextLine());
+
+            boolean updated = false;
+            for (Reservation reservation : reservations) {
+                if (reservation.getId() == id) {
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+
+                    System.out.print("Enter new room number: ");
+                    String roomNum = scanner.nextLine();
+
+                    System.out.print("Enter new name: ");
+                    String name = scanner.nextLine();
+
+                    Date startReserve = null;
+                    while (startReserve == null) {
+                        try {
+                            System.out.print("Enter new check in date(e.g. 2024/11/25 12:00): ");
+                            String checkIn = scanner.nextLine();
+                            startReserve = formatter.parse(checkIn);
+                        } catch (ParseException e) {
+                            System.out.println("Invalid date format. Please try again.");
+                        }
+                    }
+
+                    Date endReserve = null;
+                    while (endReserve == null) {
+                        try {
+                            System.out.print("Enter check out date(e.g. 2024/11/27 12:00): ");
+                            String checkOut = scanner.nextLine();
+                            endReserve = formatter.parse(checkOut);
+                        } catch (ParseException e) {
+                            System.out.println("Invalid date format. Please try again.");
+                        }
+                    }
+
+                    System.out.print("Enter other details: ");
+                    String other = scanner.nextLine();
+
+                    // update
+                    try {
+                        reservation.setRoomNumber(roomNum);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println(e.getMessage());
+                    }
+
+                    try {
+                        reservation.setName(name);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println(e.getMessage());
+                    }
+
+                    try {
+                        reservation.setStartReserve(startReserve);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println(e.getMessage());
+                    }
+
+                    try {
+                        reservation.setEndReserve(endReserve);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println(e.getMessage());
+                    }
+
+                    reservation.setOther(other);
+                    System.out.println("Reservation updated successfully");
+                    updated = true;
+                    break;
+                }
+            }
+            if (!updated) {
+                System.out.println("Reservation not updated.");
+            }
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid reservation ID. Please try again.");
         }
