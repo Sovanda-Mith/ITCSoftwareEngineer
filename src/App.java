@@ -124,6 +124,7 @@ public class App {
 
     private static void removeReservation(Scanner scanner) {
         Date now = new Date();
+        System.out.println("Reservations that can be removed(i.e. not yet started): \n");
         for (Reservation reservation : reservations) {
             if (reservation.getStartReserve().after(now)) {
                 System.out.println(reservation);
@@ -153,6 +154,7 @@ public class App {
 
     private static void updateReservation(Scanner scanner) {
         Date now = new Date();
+        System.out.println("Reservations that can be updated(i.e. not yet started): ");
         for (Reservation reservation : reservations) {
             if (reservation.getStartReserve().after(now)) {
                 System.out.println(reservation);
@@ -201,31 +203,16 @@ public class App {
                     // update
                     try {
                         reservation.setRoomNumber(roomNum);
-                    } catch (IllegalArgumentException e) {
-                        System.out.println(e.getMessage());
-                    }
-
-                    try {
                         reservation.setName(name);
-                    } catch (IllegalArgumentException e) {
-                        System.out.println(e.getMessage());
-                    }
-
-                    try {
                         reservation.setStartReserve(startReserve);
-                    } catch (IllegalArgumentException e) {
-                        System.out.println(e.getMessage());
-                    }
-
-                    try {
                         reservation.setEndReserve(endReserve);
-                    } catch (IllegalArgumentException e) {
-                        System.out.println(e.getMessage());
-                    }
+                        reservation.setOther(other);
 
-                    reservation.setOther(other);
-                    System.out.println("Reservation updated successfully");
-                    updated = true;
+                        System.out.println("Reservation updated successfully");
+                        updated = true;
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Error updating reservation: " + e.getMessage());
+                    }
                     break;
                 }
             }

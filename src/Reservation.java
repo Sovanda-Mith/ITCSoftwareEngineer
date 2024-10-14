@@ -125,7 +125,8 @@ public class Reservation {
     public String toString() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         return "Reservation ID: " + id + "\nRoom number: " + roomNumber + "\nName: " + name + "\nStart date: "
-                + formatter.format(startReserve) + "\nEnd date: " + formatter.format(endReserve) + "\nOther: " + other;
+                + formatter.format(startReserve) + "\nEnd date: " + formatter.format(endReserve) + "\nOther: " + other
+                + "\n";
     }
 
 }
