@@ -247,7 +247,7 @@ public class App {
             }
         }
         if (foundReservations) {
-            System.out.print("Enter a reservation ID to swap:");
+            System.out.print("Enter a reservation ID to swap: ");
             int id1 = Integer.parseInt(scanner.nextLine());
 
             Reservation reservation1 = getReservationById(id1);
@@ -257,7 +257,7 @@ public class App {
                 return;
             }
 
-            System.out.println("These are the reservations that can be swap with your reservation");
+            System.out.println("These are the reservations that can be swap with your reservation\n");
 
             boolean foundReservations2 = false;
             for (Reservation reservation : reservations) {
