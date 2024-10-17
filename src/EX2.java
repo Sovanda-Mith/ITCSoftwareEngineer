@@ -3,12 +3,12 @@ import com.github.kwhat.jnativehook.NativeHookException;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 
-public class EX1 implements NativeKeyListener {
+public class EX2 implements NativeKeyListener {
     private static boolean isRunning = true;
+    private static String lastKey = "";
 
     @Override
     public void nativeKeyPressed(NativeKeyEvent e) {
-
         if (e.getKeyCode() == NativeKeyEvent.VC_ENTER) {
             try {
                 isRunning = false;
@@ -16,10 +16,13 @@ public class EX1 implements NativeKeyListener {
             } catch (NativeHookException ex) {
                 ex.printStackTrace();
             }
+        } else {
+            lastKey = NativeKeyEvent.getKeyText(e.getKeyCode()).toLowerCase();
+            System.out.print(lastKey);
         }
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, NativeHookException {
         try {
             GlobalScreen.registerNativeHook();
         } catch (NativeHookException e) {
@@ -28,14 +31,16 @@ public class EX1 implements NativeKeyListener {
 
             System.exit(1);
         }
-
-        GlobalScreen.addNativeKeyListener(new EX1());
+        GlobalScreen.addNativeKeyListener(new EX2());
 
         while (isRunning) {
-            System.out.print("HitMe!");
+            if (lastKey.isEmpty()) {
+                System.out.print("HitMe!");
+            }
             Thread.sleep(200);
         }
-
         System.out.println("\n\nThanks you!");
+        GlobalScreen.unregisterNativeHook();
     }
+
 }
