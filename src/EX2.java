@@ -5,7 +5,7 @@ import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 
 public class EX2 implements NativeKeyListener {
     private static boolean isRunning = true;
-    private static String lastKey = "";
+    private static String message = "HitMe!";
 
     @Override
     public void nativeKeyPressed(NativeKeyEvent e) {
@@ -17,8 +17,7 @@ public class EX2 implements NativeKeyListener {
                 ex.printStackTrace();
             }
         } else {
-            lastKey = NativeKeyEvent.getKeyText(e.getKeyCode()).toLowerCase();
-            System.out.print(lastKey);
+            message = NativeKeyEvent.getKeyText(e.getKeyCode()).toLowerCase();
         }
     }
 
@@ -34,9 +33,10 @@ public class EX2 implements NativeKeyListener {
         GlobalScreen.addNativeKeyListener(new EX2());
 
         while (isRunning) {
-            if (lastKey.isEmpty()) {
-                System.out.print("HitMe!");
-            }
+            // if (lastKey.isEmpty()) {
+            // System.out.print("HitMe!");
+            // }
+            System.out.println(message);
             Thread.sleep(200);
         }
         System.out.println("\n\nThanks you!");
